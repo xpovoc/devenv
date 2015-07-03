@@ -1,5 +1,5 @@
 echo "Setting env ..."
-sudo ln -sf ~/.bashrc ~/devenv/.bashrc
-sudo ln -sf ~/.vimrc ~/devenv/.vimrc
-sudo ln -sf ~/.vim ~/devenv/.vim
+sudo ln -sf ~/devenv/.bashrc ~/.bashrc 
+sudo ln -sf ~/devenv/.vimrc ~/.vimrc 
+sudo ln -sf ~/devenv/.vim ~/.vim 
 echo "... DONE !!!"
