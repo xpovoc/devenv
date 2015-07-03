@@ -1,8 +1,4 @@
 # .bashrc
-if [ -f /home/rgounelle/devenv/.bashrc ]; then
-	. /home/rgounelle/devenv/.bashrc
-fi
-
 #
 # Source global definitions
 #
