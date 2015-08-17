@@ -57,10 +57,10 @@ set shiftwidth=4 tabstop=4
 set guifont=-misc-fixed-medium-r-normal-*-*-100-*-*-c-*-iso8859-15
 "set guifont=-b&h-lucidatypewriter-medium-r-normal-*-*-100-*-*-m-*-iso8859-1
 "set guifont=Monospace\ 10,LucidaTypewriter\ 9,-b&h-lucidatypewriter-medium-r-normal-*-9-*-*-*-m-*-iso10646-1
-set guifont=DejaVu\ Sans\ Mono\ 9
+set guifont=DejaVu\ Sans\ Mono\ 7
 
 " Switch off the Toolbar in GUI
-"set guioptions-=T
+set guioptions-=T
 
 " Display highlight parameters (and others) on console when launching vim
 "set highlight is
