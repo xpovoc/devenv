@@ -23,12 +23,14 @@ alias ls='ls -CF --color=tty'
 alias ll='ls -alF'
 alias h='history'
 alias gview='gview -c "color torte"'
-alias gvim='gvim -geom 130x100'
+alias gvim='gvim -geom 130x46'
 alias gros='gvim -font "LucidaTypeWriter 32"'
 alias beh='gvim ~/.bash_eternal_history'
 alias tree='/home/rgounelle/BIN/tree'
-alias htop='/home/rgounelle/BIN/htop'
 alias togvim='gvim -R -'
+#alias ssh='ssh -X'
+alias gppm='ssh -X rgounelle@moon05'
+alias gitpull='git pull && git submodule sync --recursive && git submodule update --init --recursive'
 
 #
 # Export
@@ -50,6 +52,9 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'.
 export HISTSIZE=10000 #taille de l’historique
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo "$PWD $(history 1)" >> ~/.bash_eternal_history'
+export PATH=/home/rgounelle/GoPro/pybin/pybin-20141226-1810-4a17794:$PATH
+export PATH=/home/rgounelle/GoPro/toolchain/gcc-arm-none-eabi-4_7-2013q3/bin:$PATH
 
 
 #
@@ -59,12 +64,12 @@ export HISTSIZE=10000 #taille de l’historique
 # convenient search fonctions for our bases (separation with products dir):
 # find base inside - find files which names contains pattern
 function fbi() {                                      
-	find . \( -name "\.git" -o -name "\.svn" -o -name "%*" \) -prune -o -type f -print | xargs /bin/grep -i -n --color --binary-files=without-match $1 
+	find . \( -name "\.git" -o -name "\.svn" -o -name "%*" \) -prune -o -type f -print | xargs /bin/grep -i -s -n --color --binary-files=without-match $1 
 }
 
 # find base - find files which names contains pattern
 function fb() {                                       
-	find . \( -name "\.git" -o -name "\.svn" -o -name "%*" \) -prune -o -type f -print |       /bin/grep -i    --color $1
+	find . \( -name "\.git" -o -name "\.svn" -o -name "%*" \) -prune -o -type f -print |       /bin/grep -i -s    --color $1
 }
 
 # quicker cleanup function (delete products dir in background process)
