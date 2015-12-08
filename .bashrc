@@ -29,8 +29,8 @@ alias beh='gvim ~/.bash_eternal_history'
 alias tree='/home/rgounelle/BIN/tree'
 alias togvim='gvim -R -'
 #alias ssh='ssh -X'
-alias gppm='ssh -X rgounelle@moon05'
-alias gitpull='git pull && git submodule sync --recursive && git submodule update --init --recursive'
+alias gppm='ssh -X moon'
+alias gitpull='git pull; git submodule sync --recursive; git submodule update --init --recursive'
 
 #
 # Export
@@ -72,6 +72,11 @@ function fb() {
 	find . \( -name "\.git" -o -name "\.svn" -o -name "%*" \) -prune -o -type f -print |       /bin/grep -i -s    --color $1
 }
 
+# find base - mainly used for vif function
+function fbx() {                                       
+	find . \( -name "\.git" -o -name "\.svn" -o -name "%*" -o -name "products" \) -prune -o -type f -print |       /bin/grep -s -F --color $1
+}
+
 # quicker cleanup function (delete products dir in background process)
 function myclean() {
 	TMPDIR=$( mktemp -p ~/tmp -d productsTMP.XXXXXXXXXX )
@@ -108,8 +113,13 @@ function deps(){
 	lshow -d $1 | grep -v fail
 }
 
+function kk() {
+	echo "Multi Kill:" $1
+	/bin/ps -C $1 -o pid= | xargs kill -15
+}
+
 function esp() {
-	echo "execution sommaire des process:" $1
+	echo "Brutal Multi Kill:" $1
 	/bin/ps -C $1 -o pid= | xargs kill -9
 }
 
@@ -209,3 +219,16 @@ function hh () {
     fi
 }
 
+# find base & open
+function vif() {
+    searchresult=$(fbx $1)
+    n=$(echo $searchresult | wc -w)
+    if [ "$n" != "1" ]
+    then
+        #echo "error: found $n files:" $searchresult
+		fb $1
+    else
+        echo "opening $searchresult"
+        gvim $searchresult
+    fi
+}
