@@ -6,6 +6,18 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+#
+# bash completion
+#
+#bash="4.3.30"%.*;
+#bmajor=$bash%.*;
+#bminor=$bash#*.;
+#if [ "$PS1" ] && [ $bmajor -eq 2 ] && [ $bminor ’>’ 04 ] \
+#&& [ -f /etc/bash_completion ] ; then # interactive shell
+## Source completion code
+. /etc/bash_completion
+#fi
+#unset bash bmajor bminor
 
 #
 # Alias
@@ -18,12 +30,12 @@ alias egrep='egrep --color=auto'
 alias rm='rm -i'
 alias cp='cp -i'
 alias azerty='setxkbmap fr'
-alias ij='imageJ'
+alias ij='java -Xmx512m -jar /home/rgounelle/GoPro/soft/imageJ3/ij.jar' ## >> /dev/null'
 alias ls='ls -CF --color=tty'
 alias ll='ls -alF'
 alias h='history'
 alias gview='gview -c "color torte"'
-alias gvim='gvim -geom 130x46'
+alias gvim='gvim -geom 170x90'
 alias gros='gvim -font "LucidaTypeWriter 32"'
 alias beh='gvim ~/.bash_eternal_history'
 alias tree='/home/rgounelle/BIN/tree'
@@ -31,6 +43,18 @@ alias togvim='gvim -R -'
 #alias ssh='ssh -X'
 alias gppm='ssh -X moon'
 alias gitpull='git pull; git submodule sync --recursive; git submodule update --init --recursive'
+alias gsms='git submodule sync --recursive; git submodule update --init --recursive'
+alias rmake='./build/scripts/r make'
+alias rshow='./build/scripts/r show -d'
+alias lmake='./build/scripts/l make -l'
+alias rclean='./build/scripts/r clean'
+alias lclean='./build/scripts/l clean'
+alias gitk='gitk --all &'
+alias gst='git br; git st'
+alias sourcebash='source ~/.bashrc'
+alias meteomtp='curl -4 wttr.in/montpellier'
+alias meteoprs='curl -4 wttr.in/paris'
+alias syncDev='rsync -au --delete-after --info=progress2 /home/rgounelle rgounelle@moon05:/home/rgounelle/rgounelle.data'
 
 #
 # Export
@@ -55,7 +79,8 @@ export HISTSIZE=10000 #taille de l’historique
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo "$PWD $(history 1)" >> ~/.bash_eternal_history'
 export PATH=/home/rgounelle/GoPro/pybin/pybin-20141226-1810-4a17794:$PATH
 export PATH=/home/rgounelle/GoPro/toolchain/gcc-arm-none-eabi-4_7-2013q3/bin:$PATH
-
+export LMAKE_ROOT_DIR=/home/rgounelle/GoPro/Bases/LMAKE
+export LMAKE_DIR=/home/rgounelle/GoPro/Bases/LMAKE
 
 #
 # Functions
@@ -65,6 +90,10 @@ export PATH=/home/rgounelle/GoPro/toolchain/gcc-arm-none-eabi-4_7-2013q3/bin:$PA
 # find base inside - find files which names contains pattern
 function fbi() {                                      
 	find . \( -name "\.git" -o -name "\.svn" -o -name "%*" \) -prune -o -type f -print | xargs /bin/grep -i -s -n --color --binary-files=without-match $1 
+}
+
+function epfbi() {                                      
+	find . \( -name "\.git" -o -name "\.svn" -o -name "banzai_link" -o -name "%*" \) -prune -o -type f -print | xargs /bin/grep -i -s -n --color --binary-files=without-match $1 
 }
 
 # find base - find files which names contains pattern
@@ -212,9 +241,9 @@ function hh () {
 		echo "error: usage: hh [word]" >&2
     else
         if [ "$1" == "" ]; then
-            tail -1000 ~/.bash_eternal_history | uniq | tail -40
+            tail -1000 ~/.bash_eternal_history | uniq | tail -80
         else
-            grep "$1"  ~/.bash_eternal_history | uniq | tail -40
+            grep "$1" -a ~/.bash_eternal_history* | uniq | tail -80
         fi
     fi
 }
@@ -232,3 +261,38 @@ function vif() {
         gvim $searchresult
     fi
 }
+
+# Intall and save dpkg
+function aptinstall() {
+	sudo apt-get install $1
+	if [ "$?" == "0" ]
+	then
+		if grep -Fxq "$1" ~/devenv/dpkgList.txt
+		then
+		    echo "devenv: pkg already in list"
+		else
+    		echo "$1" >> ~/devenv/dpkgList.txt
+			echo "devenv: pkg added in list"
+		fi
+	fi
+}
+
+# Add tips
+function addtips() {
+	echo "$1 ### $2" >>  ~/devenv/useful/tuto/tiptools.txt
+}
+
+function tips () {
+	if [ $# -gt 1 ]; then
+		echo "error: usage: tips [word]" >&2
+    else
+        if [ "$1" == "" ]; then
+            tail -1000 ~/devenv/useful/tuto/tiptools.txt | uniq | tail -40
+        else
+            grep "$1"  ~/devenv/useful/tuto/tiptools.txt | uniq | tail -40
+        fi
+    fi
+}
+
+#source ~/devenv/bash-git-prompt/gitprompt.sh
+#GIT_PROMPT_ONLY_IN_REPO=1

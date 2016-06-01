@@ -12,17 +12,7 @@ set noswapfile
 "filetype on
 "Taglist Plugin
 "let Tlist_Process_File_Always = 1
-nmap <F8> :TlistToggle<CR>
-nmap <C-n> :NERDTreeToggle<CR>
-
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'taglist.vim'
-Plugin 'scrooloose/nerdtree'
-call vundle#end()
-filetype plugin indent on
+"nmap <F8> :TlistToggle<CR>
 
 "File type
 autocmd! BufRead,BufNewFile *.lm       set filetype=m5
@@ -67,10 +57,14 @@ set shiftwidth=4 tabstop=4
 set guifont=-misc-fixed-medium-r-normal-*-*-100-*-*-c-*-iso8859-15
 "set guifont=-b&h-lucidatypewriter-medium-r-normal-*-*-100-*-*-m-*-iso8859-1
 "set guifont=Monospace\ 10,LucidaTypewriter\ 9,-b&h-lucidatypewriter-medium-r-normal-*-9-*-*-*-m-*-iso10646-1
-"set guifont=DejaVu\ Sans\ Mono\ 6
+<<<<<<< HEAD
+set guifont=DejaVu\ Sans\ Mono\ 6
 "set guifont=DejaVu\ Sans\ Mono\ 7
-set guifont=DejaVu\ Sans\ Mono\ 9
+"set guifont=DejaVu\ Sans\ Mono\ 9
 "set guifont=DejaVu\ Sans\ Mono\ 10
+=======
+set guifont=DejaVu\ Sans\ Mono\ 7
+>>>>>>> e0ae3627e8f70fc0f80f3fd2cb713ca3ba0f735b
 
 " Switch off the Toolbar in GUI
 set guioptions-=T
@@ -303,20 +297,3 @@ set tags+=tags      " in current directory
 set tags+=../tags
 "set tags+=~/vim/tags/systags
 
-"Use TAB to complete when typing words, else inserts TABs as usual.
-"Uses dictionary and source files to find matching words to complete.
-
-"See help completion for source,
-"Note: usual completion is on <C-n> but more trouble to press all the time.
-"Never type the same word twice and maybe learn a new spellings!
-"Use the Linux dictionary when spelling is in doubt.
-"Window users can copy the file to their machine.
-function! Tab_Or_Complete()
-  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-N>"
-  else
-    return "\<Tab>"
-  endif
-endfunction
-:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-:set dictionary="/usr/dict/words"

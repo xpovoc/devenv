@@ -1,0 +1,13 @@
+git merge --no-commit <branch_name> ### git merge without commit things
+git merge --ff-only <branch_name> ### git merge with fast forward only
+git branch -d <branch_name> ### delete a local branch
+git push origin --delete <branch_name> ### delete a remote branch
+git submodule update ### sync submodule
+git branch -r ### list remote branch
+git branch -a ### list local branch
+git reset HEAD~4 --hard ### revert commit
+git fetch origin <branch_name_remote>:<branche_name_local> ### fetch origin in local branch
+grep -r "<mot0>\|<mot1>\|<mot2>" . ### grep multiple words
+grep "apt-get install" ~/.bash_eternal_history | sort | uniq ### grep all package
+
+
